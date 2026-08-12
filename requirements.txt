@@ -1,0 +1,165 @@
+# =============================================================================
+#  Sundial - Python dependencies
+# =============================================================================
+#
+#  This file has TWO halves, and the split is load-bearing.
+#
+#  REQUIRED (active lines - this is what "Start Sundial.bat" installs)
+#  -------------------------------------------------------------------
+#  Three pure-Python wheels. No compiler, no native build, no Node.js. With
+#  only these installed Sundial boots, serves the dashboard, and runs the
+#  ENTIRE loop - engine, scheduler, stats, notifications, recovery ladder,
+#  SSE event stream - on the `simulator` backend. That is deliberate: the whole
+#  product is developed and tested with the game switched off.
+#
+#  OPTIONAL (commented out on purpose - the blocks further down)
+#  ------------------------------------------------------------
+#  Everything a *real* backend needs is heavy (OpenCV is ~60 MB), platform
+#  specific, or both. Backends import them LAZILY, inside the method that needs
+#  them, and turn ImportError into BackendUnavailable. A missing package
+#  therefore greys out ONE backend on the settings page, with the pip command
+#  to fix it printed as the reason - it never stops the app from starting and
+#  it never breaks the other backends. Nobody should download OpenCV to run the
+#  simulator, so these ship disabled.
+#
+#  To enable a block: delete the leading "# " from its package lines and
+#  re-run the launcher, or install straight into the same environment:
+#
+#      Start Sundial.bat extras
+#      .venv\Scripts\python.exe -m pip install --prefer-binary opencv-python numpy
+#
+#  --prefer-binary is not decoration: it tells pip to take a prebuilt wheel
+#  over a source tarball, which is what keeps "no Visual C++ Build Tools
+#  required" true on a fresh Windows box.
+#
+#  Version policy: the three required pins are the exact versions Icarus runs
+#  in production - the only compatibility evidence that actually matters here.
+#  The optional packages are floors (>=), because they are the user's own
+#  install and pinning them would fight with whatever else is in their venv.
+# =============================================================================
+
+
+# --------------------------------------------------------------------------
+#  REQUIRED - the app itself
+# --------------------------------------------------------------------------
+
+# The dashboard API: routing, request validation, the /api/stream SSE feed and
+# the static web/ mount. Same version Icarus serves its panel from.
+fastapi==0.136.1
+
+# The ASGI server that actually runs it (127.0.0.1 only - see README).
+uvicorn==0.18.2
+
+# Request/response models for api/schemas.py. FastAPI needs it anyway; we pin
+# it explicitly so a stray upgrade cannot silently change validation behaviour
+# in the middle of a multi-day run.
+pydantic==2.13.4
+
+
+# ==========================================================================
+#  OPTIONAL - emulator backend (MuMu / BlueStacks / LDPlayer / any ADB)
+# ==========================================================================
+#  Unlocks: template matching on emulator screenshots, i.e. the ability to
+#  find the START button and tell the auto-training screens apart.
+#  Without these the emulator backend reports:
+#      "OpenCV/numpy not installed" -> available: false, and is greyed out.
+#
+#  NOT needed: an ADB python library. backends/emulator/adb.py shells out to
+#  the adb.exe your emulator already ships (MuMu's adb_server.exe, BlueStacks'
+#  HD-Adb.exe, ...) through asyncio.to_thread. One less dependency, one less
+#  background socket to wedge overnight. `adbutils` is listed below only for
+#  people who would rather use a library; nothing in Sundial imports it.
+#
+# opencv-python>=4.10            # cv2.matchTemplate + resize. Substitute
+#                                #   opencv-python-headless for a ~40 MB
+#                                #   smaller install - Sundial never opens a
+#                                #   cv2 window, it writes debug PNGs instead.
+# numpy>=1.26                    # the array type cv2 speaks. Pulled in by
+#                                #   opencv anyway; pinned here so an
+#                                #   opencv-free install can still be reasoned
+#                                #   about.
+# adbutils>=2.6                  # OPTIONAL-OPTIONAL. Not imported by Sundial.
+#                                #   Only install if you are writing your own
+#                                #   ADB transport and prefer a library to the
+#                                #   subprocess wrapper.
+
+
+# ==========================================================================
+#  OPTIONAL - steam backend (the Windows desktop client)
+# ==========================================================================
+#  Unlocks: seeing the game window's pixels and clicking inside it.
+#  Without these the steam backend reports which piece is missing and is
+#  greyed out. Window discovery, DPI awareness and health_check() keep working
+#  regardless - backends/steam/window.py is pure ctypes on purpose, so
+#  "is the game even running?" still answers on a bare install.
+#
+# mss>=9.0                       # fast client-rect screen capture (~5-10 ms).
+#                                #   Optional: there is a GDI fallback in
+#                                #   steam/vision.py, mss is just quicker and
+#                                #   handles multi-monitor more predictably.
+# opencv-python>=4.10            # template matching, same as the emulator.
+# numpy>=1.26                    # ditto.
+# pyautogui>=0.9.54              # mouse moves and clicks in the game window.
+#                                #   Pulls in pyscreeze/Pillow/pygetwindow.
+#                                #   IMPORTANT: pyautogui calls
+#                                #   SetProcessDPIAware() at import time, which
+#                                #   is why steam/window.py sets per-monitor
+#                                #   DPI awareness before importing it.
+# pytesseract>=0.3.10            # reads the TP counter / turn counter / reward
+#                                #   lines. ALSO needs the native Tesseract
+#                                #   binary: https://github.com/UB-Mannheim/tesseract
+#                                #   (set backends.steam.tesseract_path if it is
+#                                #   not on PATH). Without OCR the backend
+#                                #   honestly reports "TP unknown" and falls
+#                                #   back to waiting instead of guessing.
+# winocr>=0.0.9                  # alternative OCR using the built-in Windows
+#                                #   engine - no native install, slightly worse
+#                                #   on stylised digits. Either engine is
+#                                #   enough; installing both is pointless.
+# pywin32>=306                   # NOT required by Sundial: every Win32 call
+#                                #   we make (window rects, DPI, DPAPI for
+#                                #   stored credentials) goes through stdlib
+#                                #   ctypes. Install it only if a third-party
+#                                #   package you add asks for win32api, or if
+#                                #   you want pygetwindow's win32 code paths.
+
+
+# ==========================================================================
+#  REQUIRED for the rotation loop (talks to the Umamusume Global servers)
+# ==========================================================================
+#  The loop drives the vendored `uma/` game-API layer (Fortuna's Global
+#  transport + Icarus's Independent Training, both vendored into this repo, so
+#  there is nothing external to check out). It is imported LAZILY: with the
+#  packages below missing the app still boots and the dashboard reports the
+#  loop unavailable, with the reason, until you add them.
+#
+#  You ALSO need a captured device identity file under data/uma/identity/ and
+#  Node.js on PATH (the vendored uma/steam_ticket minter mints the Steam session
+#  ticket through `steam-user`, which ships in uma/steam_ticket/node_modules).
+#  frida is only needed for the game-assisted captures (recording a training
+#  setup, first-time device linking); the headless sign-in/claim/dailies path
+#  does not use it.
+#
+# curl_cffi==0.7.4               # TLS-fingerprinted HTTP the game server accepts.
+# pycryptodome==3.14.1           # AES-CBC request bodies (imported as `Crypto`).
+# msgpack==1.1.0                 # the wire format underneath the encryption.
+# frida==17.9.1                  # OPTIONAL-OPTIONAL: only the Frida-assisted
+#                                #   captures (training-setup recording, device
+#                                #   linking). Not needed for claim/dailies.
+# requests==2.33.1               # used by Sundial's notifier when present
+#                                #   (better Windows proxy/CA handling than
+#                                #   urllib; the notifier falls back to urllib).
+
+
+# ==========================================================================
+#  OPTIONAL - development
+# ==========================================================================
+#  The test suite is plain stdlib unittest by design, so it runs on a bare
+#  install:   python -m unittest discover -s tests -v
+#  Nothing below is needed to run or test Sundial.
+#
+# pytest>=8.0                    # nicer output and -k filtering over the same
+#                                #   unittest TestCases.
+# httpx>=0.27                    # only if you want fastapi.testclient, which
+#                                #   requires it.
+# ruff>=0.6                      # the linter this codebase is written against.
