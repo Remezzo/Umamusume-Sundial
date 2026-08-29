@@ -1,4 +1,5 @@
-<div align="center">
+<div align="center"> 
+
 
 <img src="web/sundial.png" alt="Sundial" width="120" />
 
@@ -6,14 +7,14 @@
 
 ### Independent Training that never stops. On every account. Forever.
 
-**Sundial is a headless bot that runs the game's own Independent Training on a perpetual loop — training uma after uma into your inheritance pool — start a career, bank the parent, buy the skills, run the races, start the next — across up to ten accounts in parallel, unattended, indefinitely.** No game client, no window to babysit: it drives the servers directly and builds you a deeper, stronger bench of parents while you do anything else.
+**Sundial is a headless bot that runs the game's own Independent Training on a perpetual loop — training uma after uma into your inheritance pool — start a career, bank the parent, buy the skills, run the races, start the next — across up to twelve accounts in parallel, unattended, indefinitely.** No game client, no window to babysit: it drives the servers directly and builds you a deeper, stronger bench of parents while you do anything else.
 
 [![Download](https://img.shields.io/badge/Download-Sundial.exe-D4A017?style=for-the-badge)](https://github.com/Remezzo/Umamusume-Sundial/releases/latest)
 &nbsp;
 [![Discord](https://img.shields.io/badge/Discord-Join_the_Icarus_hub-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/wpbd3hTBDc)
 
 ![Platform](https://img.shields.io/badge/platform-Windows-0078D6)
-![Version](https://img.shields.io/badge/release-1.0.0-D4A017)
+![Version](https://img.shields.io/badge/release-1.0.11-D4A017)
 ![Signed updates](https://img.shields.io/badge/updates-Ed25519_signed-1f7a4d)
 ![License](https://img.shields.io/badge/license-Proprietary-c02626)
 
@@ -55,8 +56,9 @@ What that means in practice:
 - **It buys the skills you want.** After each career it spends the skill points on your skills-to-buy list — or on a running-style preset that fills the list from real published-parent data — so your parents carry the skill sparks worth inheriting.
 - **It runs the races you schedule.** Your G1 mile/medium/long schedule (or a preset's) is entered automatically, so each career finishes as a richer parent — better aptitudes, more fans banked along the way.
 - **It figures out the setup on its own.** No recorded setup? Sundial auto-builds a valid start from the account itself — trainee, deck, parents, succession, scenario — and if a saved parent no longer exists it picks a working replacement and keeps going instead of stalling.
-- **It runs your whole roster in parallel.** While one account's career is cooking on the game's servers, Sundial is banking another's and starting a third. Ten accounts don't take ten times as long — they overlap.
-- **It never stops and it never crashes the loop.** One account hitting a snag (out of TP, storage full, a bad parent) parks *that* account with a clear reason and keeps the rest looping. The bot is built to run for days.
+- **It runs your whole roster in parallel.** While one account's career is cooking on the game's servers, Sundial is banking another's and starting a third. Twelve accounts don't take twelve times as long — they overlap.
+- **It never stops and it never crashes the loop.** One account hitting a snag (out of TP, storage full, a career you left half-played) parks *that* account with a clear reason and keeps the rest looping — and no single stuck account can hog the rotation and starve the others. The bot is built to run for days.
+- **It keeps working when the game changes.** New banner characters, a new game version, even a change to what a career costs: Sundial reads the game's own data, notices the difference, and adapts on its own — no reinstall, no waiting for an update. Game data refreshes over the air, verified against a signed hash before a single byte is trusted.
 - **It works in every scenario** — URA Finale, Unity Cup, Grand Concert, and Trackblazer/MANT.
 
 > In continuous testing, a four-account fleet banked a **fresh trained parent roughly every 50 minutes per account, completely unattended** — careers rolling over one after another, around the clock, with nobody at the keyboard.
@@ -71,10 +73,12 @@ The training loop is the star — but a real account needs its dailies done and 
 
 | | |
 |---|---|
-| 🎴 **Up to 10 accounts, fully isolated** | Each account is its own world — deck, parents, scenario, skills, races, dailies. No cross-contamination, ever. |
+| 🎴 **Up to 12 accounts, fully isolated** | Each account is its own world — deck, parents, scenario, skills, races, dailies. No cross-contamination, ever. |
 | 🏆 **Every daily, once each** | Team Trials, Daily Races, your pick of Legend Race, present box, missions, and the shop — all reset-aware, done once per game day. |
 | ⏰ **Visits only when there's a reason** | No mindless polling. Sundial signs in when a career finishes, RP fills, or the reset passes — and sits silent otherwise. ~12× fewer logins than a naive loop. |
 | 🧠 **One-click running-style presets** | Front Runner, Pace Chaser, Late Surger, End Closer — each fills your skills-to-buy list and schedules every G1 mile/medium/long automatically. Import and export them. |
+| 🥇 **Run every G1 it's suited for** | Optional per account: extend the auto-scheduled G1s across all three years instead of just the first two. A legacy parent is judged on its G1 wins, so for parent farming this is the shape you want. Aptitude-gated, never clashes with a compulsory race. |
+| 🧯 **Clears its own blockers** | A career left half-played in the game blocks Independent Training entirely — Sundial names it and, if you opt in per account, discards it and starts fresh. Off by default: it deletes a real career and can't be undone. |
 | 👤 **Acts human** | Per-account timing personalities, jitter on every action, and the randomized 2–5 minute banking hold — always on, no off switch. |
 | 🧹 **Veterans manager** | View and safely delete trained umas to free storage, so a full box never stalls training. Protected umas are greyed out and never touched. |
 | 📊 **Live local dashboard** | Fleet status, per-account careers and fans, filterable statistics, and a full visit history — all at `127.0.0.1:8780`. |
@@ -103,11 +107,11 @@ Closing the browser tab changes nothing — reopen `127.0.0.1:8780` any time. Yo
 
 Sundial is engineered as a finished product, not a script dump:
 
-- **Native-compiled** with Nuitka — the shipped binary is machine code, not lift-and-decompile bytecode.
 - **Authenticode-signed** and **integrity-checked at startup** — a build modified after signing detects it and refuses to auto-update.
 - **Signed updates** — the updater trusts one pinned Ed25519 key and verifies both the manifest signature and the download's hash before ever swapping itself. A tampered or unofficial "update" is rejected, not installed.
 - **Your credentials never leave your machine** — Data Link passwords are encrypted at rest with Windows DPAPI (user + machine bound) and are never returned by the API or written to a log.
 - **Local-only by design** — the dashboard binds to loopback and does nothing over the network except talk to the game and check for its own updates.
+- **Honest about what it's doing** — the dashboard only reports a career as running once the game has actually confirmed the start, progress streams live while long work happens rather than arriving in one burst, and every refusal names its real cause instead of guessing. When Sundial doesn't know something, it says so.
 
 ---
 
@@ -135,7 +139,9 @@ Automating the game is against Cygames' Terms of Service and carries real, inher
 No. Sundial drives the game's own servers directly and headlessly — the game client stays closed. (The game and Sundial share one device seat, so playing an account yourself while the loop runs will sign the other out; pause Sundial first if you want to play.)
 
 **A career won't start / a picker looks empty.**
-Empty pickers just mean that account hasn't been visited recently — press **Run once** on the Dashboard. A start refusal is always named in the log (out of TP, veteran storage full, or a missing parent) and the loop retries on its own. The in-app **Help** page covers the rest.
+Empty pickers just mean that account hasn't been visited yet — open the account and press **Visit now** to sign in and load its decks, veterans, friends and races.
+
+A start refusal is always **named** in the log rather than left as a mystery. By far the most common cause is a **career you left half-played in the game**: the game allows one career at a time, so it blocks Independent Training completely. Sundial tells you which account, and you either finish or quit that career in the game — or turn on *Delete the unfinished career* for that account and let Sundial clear it. Other named causes: out of TP, veteran storage full, a missing parent, or an event window that has closed. The loop retries on its own, and the in-app **Help** page covers the rest.
 
 **Where do my accounts and settings live?**
 In folders right next to `Sundial.exe`. Back up that folder and you've backed up everything. Update by dropping a new exe on top — your data is untouched.
@@ -147,4 +153,5 @@ In folders right next to `Sundial.exe`. Back up that folder and you've backed up
 Sundial is an independent, unofficial tool. It is **not affiliated with, endorsed by, or sponsored by Cygames, Inc.** "Umamusume: Pretty Derby" and all related names and marks are the property of their respective owners.
 
 Sundial is **proprietary software** — see [LICENSE](LICENSE). You may download and run the official build for personal use; you may **not** copy, modify, redistribute, or reuse it or its code. All rights reserved © 2026 Remezzo / Icarus Network.
+
 
