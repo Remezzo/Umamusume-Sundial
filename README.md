@@ -1,5 +1,4 @@
-<div align="center"> 
-
+<div align="center">
 
 <img src="web/sundial.png" alt="Sundial" width="120" />
 
@@ -14,7 +13,7 @@
 [![Discord](https://img.shields.io/badge/Discord-Join_the_Icarus_hub-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/wpbd3hTBDc)
 
 ![Platform](https://img.shields.io/badge/platform-Windows-0078D6)
-![Version](https://img.shields.io/badge/release-1.0.11-D4A017)
+![Version](https://img.shields.io/badge/release-1.0.13-D4A017)
 ![Signed updates](https://img.shields.io/badge/updates-Ed25519_signed-1f7a4d)
 ![License](https://img.shields.io/badge/license-Proprietary-c02626)
 
@@ -74,7 +73,8 @@ The training loop is the star — but a real account needs its dailies done and 
 | | |
 |---|---|
 | 🎴 **Up to 12 accounts, fully isolated** | Each account is its own world — deck, parents, scenario, skills, races, dailies. No cross-contamination, ever. |
-| 🏆 **Every daily, once each** | Team Trials, Daily Races, your pick of Legend Race, present box, missions, and the shop — all reset-aware, done once per game day. |
+| 🏆 **Every daily, once each** | Team Trials, Daily Races, your pick of Legend Race, present box, missions, and the shop — all reset-aware, done once per game day. Pick each account's Daily Race (Moonlight Sho for Monies, Jupiter Cup for Support Points) and difficulty, or leave it on the highest tier. |
+| 🍨 **Parfaits, if you want them** | Optional per account: spend a Pleasing Parfait before each Team Trials battle, Daily Race and Legend Race so runners go in with Great mood. Stock-aware, shows your balance, and never spends one on a mood that's already Great. Off by default. |
 | ⏰ **Visits only when there's a reason** | No mindless polling. Sundial signs in when a career finishes, RP fills, or the reset passes — and sits silent otherwise. ~12× fewer logins than a naive loop. |
 | 🧠 **One-click running-style presets** | Front Runner, Pace Chaser, Late Surger, End Closer — each fills your skills-to-buy list and schedules every G1 mile/medium/long automatically. Import and export them. |
 | 🥇 **Run every G1 it's suited for** | Optional per account: extend the auto-scheduled G1s across all three years instead of just the first two. A legacy parent is judged on its G1 wins, so for parent farming this is the shape you want. Aptitude-gated, never clashes with a compulsory race. |
@@ -107,6 +107,7 @@ Closing the browser tab changes nothing — reopen `127.0.0.1:8780` any time. Yo
 
 Sundial is engineered as a finished product, not a script dump:
 
+- **Native-compiled** with Nuitka — the shipped binary is machine code, not lift-and-decompile bytecode.
 - **Authenticode-signed** and **integrity-checked at startup** — a build modified after signing detects it and refuses to auto-update.
 - **Signed updates** — the updater trusts one pinned Ed25519 key and verifies both the manifest signature and the download's hash before ever swapping itself. A tampered or unofficial "update" is rejected, not installed.
 - **Your credentials never leave your machine** — Data Link passwords are encrypted at rest with Windows DPAPI (user + machine bound) and are never returned by the API or written to a log.
@@ -153,5 +154,3 @@ In folders right next to `Sundial.exe`. Back up that folder and you've backed up
 Sundial is an independent, unofficial tool. It is **not affiliated with, endorsed by, or sponsored by Cygames, Inc.** "Umamusume: Pretty Derby" and all related names and marks are the property of their respective owners.
 
 Sundial is **proprietary software** — see [LICENSE](LICENSE). You may download and run the official build for personal use; you may **not** copy, modify, redistribute, or reuse it or its code. All rights reserved © 2026 Remezzo / Icarus Network.
-
-
