@@ -13,7 +13,7 @@
 [![Discord](https://img.shields.io/badge/Discord-Join_the_Icarus_hub-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/wpbd3hTBDc)
 
 ![Platform](https://img.shields.io/badge/platform-Windows-0078D6)
-![Version](https://img.shields.io/badge/release-1.0.13-D4A017)
+![Version](https://img.shields.io/badge/release-1.0.16-D4A017)
 ![Signed updates](https://img.shields.io/badge/updates-Ed25519_signed-1f7a4d)
 ![License](https://img.shields.io/badge/license-Proprietary-c02626)
 
@@ -80,7 +80,7 @@ The training loop is the star — but a real account needs its dailies done and 
 | 🥇 **Run every G1 it's suited for** | Optional per account: extend the auto-scheduled G1s across all three years instead of just the first two. A legacy parent is judged on its G1 wins, so for parent farming this is the shape you want. Aptitude-gated, never clashes with a compulsory race. |
 | 🧯 **Clears its own blockers** | A career left half-played in the game blocks Independent Training entirely — Sundial names it and, if you opt in per account, discards it and starts fresh. Off by default: it deletes a real career and can't be undone. |
 | 👤 **Acts human** | Per-account timing personalities, jitter on every action, and the randomized 2–5 minute banking hold — always on, no off switch. |
-| 🧹 **Veterans manager** | View and safely delete trained umas to free storage, so a full box never stalls training. Protected umas are greyed out and never touched. |
+| 🧹 **Veterans manager** | View and safely delete trained umas to free storage, so a full box never stalls training — listed newest-first so fan-race extras sit at the top, with Score and Name a click away. Protected umas are greyed out and never touched. |
 | 📊 **Live local dashboard** | Fleet status, per-account careers and fans, filterable statistics, and a full visit history — all at `127.0.0.1:8780`. |
 | 🔔 **Discord digests** | One clean webhook per cycle: total fans, fans per account, dailies claimed, legend/daily status. A glance, not a firehose. |
 | 🔄 **Safe self-update** | Cryptographically-signed updates — Sundial only ever installs a build signed by the real publisher's key. |
@@ -146,6 +146,9 @@ A start refusal is always **named** in the log rather than left as a mystery. By
 
 **Where do my accounts and settings live?**
 In folders right next to `Sundial.exe`. Back up that folder and you've backed up everything. Update by dropping a new exe on top — your data is untouched.
+
+**Windows Defender flagged or deleted Sundial.**
+Since 1.0.16 Sundial unpacks itself **once**, into `%LOCALAPPDATA%\Icarus Network\Sundial\<version>`, and reuses that folder — older builds wrote a brand-new copy to `%TEMP%` on every launch, which is exactly the pattern Defender's heuristics flag ("Error 225 … contains a virus or potentially unwanted software"). If Defender still objects, exclude that one folder. Sundial is signed with its own certificate rather than one bought from a public authority, so Windows may still call it an unknown publisher on first run; that is expected, and the build verifies its own signature at startup.
 
 ---
 
