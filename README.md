@@ -55,7 +55,7 @@ What that means in practice:
 - **It buys the skills you want.** After each career it spends the skill points on your skills-to-buy list — or on a running-style preset that fills the list from real published-parent data — so your parents carry the skill sparks worth inheriting.
 - **It runs the races you schedule.** Your G1 mile/medium/long schedule (or a preset's) is entered automatically, so each career finishes as a richer parent — better aptitudes, more fans banked along the way.
 - **It figures out the setup on its own.** No recorded setup? Sundial auto-builds a valid start from the account itself — trainee, deck, parents, succession, scenario — and if a saved parent no longer exists it picks a working replacement and keeps going instead of stalling.
-- **It runs your whole roster in parallel.** While one account's career is cooking on the game's servers, Sundial is banking another's and starting a third. Twelve accounts don't take twelve times as long — they overlap.
+- **It runs your whole roster in parallel.** While one account's career is cooking on the game's servers, Sundial is banking another's and starting a third. Twelve accounts don't take twelve times as long — they overlap. Careers come first, too: an account with a career to bank or start is served before accounts that only owe dailies, because an uncollected career leaves that account idle while dailies keep until the reset.
 - **It never stops and it never crashes the loop.** One account hitting a snag (out of TP, storage full, a career you left half-played) parks *that* account with a clear reason and keeps the rest looping — and no single stuck account can hog the rotation and starve the others. The bot is built to run for days.
 - **It keeps working when the game changes.** New banner characters, a new game version, even a change to what a career costs: Sundial reads the game's own data, notices the difference, and adapts on its own — no reinstall, no waiting for an update. Game data refreshes over the air, verified against a signed hash before a single byte is trusted.
 - **It works in every scenario** — URA Finale, Unity Cup, Grand Concert, and Trackblazer/MANT.
@@ -73,15 +73,16 @@ The training loop is the star — but a real account needs its dailies done and 
 | | |
 |---|---|
 | 🎴 **Up to 12 accounts, fully isolated** | Each account is its own world — deck, parents, scenario, skills, races, dailies. No cross-contamination, ever. |
-| 🏆 **Every daily, once each** | Team Trials, Daily Races, your pick of Legend Race, present box, missions, and the shop — all reset-aware, done once per game day. Pick each account's Daily Race (Moonlight Sho for Monies, Jupiter Cup for Support Points) and difficulty, or leave it on the highest tier. |
+| 🏆 **Every daily, once each** | Team Trials, Daily Races, your pick of Legend Race, present box, missions, and the shop — all reset-aware, done once per game day. Pick each account's Daily Race — Moonlight Sho for Monies, Jupiter Cup for Support Points — and the difficulty to run it at. |
 | 🍨 **Parfaits, if you want them** | Optional per account: spend a Pleasing Parfait before each Team Trials battle, Daily Race and Legend Race so runners go in with Great mood. Stock-aware, shows your balance, and never spends one on a mood that's already Great. Off by default. |
+| 🗓️ **A week you draw yourself** | Give each day its own run windows — evenings on weekdays, all day at the weekend, as many per day as you like — and keep the whole week under a name to put back later. Sundial starts and stops the loop on the window edges and stays quiet outside them. |
 | ⏰ **Visits only when there's a reason** | No mindless polling. Sundial signs in when a career finishes, RP fills, or the reset passes — and sits silent otherwise. ~12× fewer logins than a naive loop. |
 | 🧠 **One-click running-style presets** | Front Runner, Pace Chaser, Late Surger, End Closer — each fills your skills-to-buy list and schedules every G1 mile/medium/long automatically. Import and export them. |
 | 🥇 **Run every G1 it's suited for** | Optional per account: extend the auto-scheduled G1s across all three years instead of just the first two. A legacy parent is judged on its G1 wins, so for parent farming this is the shape you want. Aptitude-gated, never clashes with a compulsory race. |
 | 🧯 **Clears its own blockers** | A career left half-played in the game blocks Independent Training entirely — Sundial names it and, if you opt in per account, discards it and starts fresh. Off by default: it deletes a real career and can't be undone. |
 | 👤 **Acts human** | Per-account timing personalities, jitter on every action, and the randomized 2–5 minute banking hold — always on, no off switch. |
 | 🧹 **Veterans manager** | View and safely delete trained umas to free storage, so a full box never stalls training — listed newest-first so fan-race extras sit at the top, with Score and Name a click away. Protected umas are greyed out and never touched. |
-| 📊 **Live local dashboard** | Fleet status, per-account careers and fans, filterable statistics, and a full visit history — all at `127.0.0.1:8780`. |
+| 📊 **Live local dashboard** | Fleet status, per-account careers and fans, filterable statistics, and a full visit history — all at `127.0.0.1:8780`. **Ctrl-K** jumps straight to any account, setting or page. |
 | 🔔 **Discord digests** | One clean webhook per cycle: total fans, fans per account, dailies claimed, legend/daily status. A glance, not a firehose. |
 | 🔄 **Safe self-update** | Cryptographically-signed updates — Sundial only ever installs a build signed by the real publisher's key. |
 
@@ -111,7 +112,7 @@ Sundial is engineered as a finished product, not a script dump:
 - **Authenticode-signed** and **integrity-checked at startup** — a build modified after signing detects it and refuses to auto-update.
 - **Signed updates** — the updater trusts one pinned Ed25519 key and verifies both the manifest signature and the download's hash before ever swapping itself. A tampered or unofficial "update" is rejected, not installed.
 - **Your credentials never leave your machine** — Data Link passwords are encrypted at rest with Windows DPAPI (user + machine bound) and are never returned by the API or written to a log.
-- **Local-only by design** — the dashboard binds to loopback and does nothing over the network except talk to the game and check for its own updates.
+- **Local-only by design** — the dashboard binds to loopback and does nothing over the network except talk to the game and check for its own updates. It also **only answers its own pages**: a request from any other site, or aimed at Sundial through another domain, is refused rather than acted on.
 - **Honest about what it's doing** — the dashboard only reports a career as running once the game has actually confirmed the start, progress streams live while long work happens rather than arriving in one burst, and every refusal names its real cause instead of guessing. When Sundial doesn't know something, it says so.
 
 ---
@@ -157,3 +158,4 @@ Since 1.0.16 Sundial unpacks itself **once**, into `%LOCALAPPDATA%\Icarus Networ
 Sundial is an independent, unofficial tool. It is **not affiliated with, endorsed by, or sponsored by Cygames, Inc.** "Umamusume: Pretty Derby" and all related names and marks are the property of their respective owners.
 
 Sundial is **proprietary software** — see [LICENSE](LICENSE). You may download and run the official build for personal use; you may **not** copy, modify, redistribute, or reuse it or its code. All rights reserved © 2026 Remezzo / Icarus Network.
+
