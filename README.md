@@ -13,7 +13,7 @@
 [![Discord](https://img.shields.io/badge/Discord-Join_the_Icarus_hub-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/wpbd3hTBDc)
 
 ![Platform](https://img.shields.io/badge/platform-Windows-0078D6)
-![Version](https://img.shields.io/badge/release-1.0.16-D4A017)
+![Version](https://img.shields.io/badge/release-1.0.18-D4A017)
 ![Signed updates](https://img.shields.io/badge/updates-Ed25519_signed-1f7a4d)
 ![License](https://img.shields.io/badge/license-Proprietary-c02626)
 
@@ -31,7 +31,7 @@ The catch: a single career takes about **50 minutes**, and doing it by hand mean
 
 ---
 
-## 🔁 The Independent Training engine
+## The Independent Training engine
 
 This is the heart of Sundial. Point it at your accounts and it runs this cycle, **on every account at once, forever:**
 
@@ -52,7 +52,7 @@ This is the heart of Sundial. Point it at your accounts and it runs this cycle, 
 What that means in practice:
 
 - **It banks a fresh parent, career after career.** Sundial opens a career, lets the game's servers run it to completion, then banks the trained uma into your inheritance pool and immediately queues the next one. No babysitting, no timers, no "did I collect that one?"
-- **It buys the skills you want.** After each career it spends the skill points on your skills-to-buy list — or on a running-style preset that fills the list from real published-parent data — so your parents carry the skill sparks worth inheriting.
+- **It buys the skills you want.** After each career it spends the skill points on your skills-to-buy list — or on a running-style preset that fills the list from real published-parent data — so your parents carry the skill sparks worth inheriting. Your list gets the budget first, in your order, and a skill on it is *attempted* even when that career never offered a hint for it. When the game refuses one, the career report says which and why rather than leaving you to guess.
 - **It runs the races you schedule.** Your G1 mile/medium/long schedule (or a preset's) is entered automatically, so each career finishes as a richer parent — better aptitudes, more fans banked along the way.
 - **It figures out the setup on its own.** No recorded setup? Sundial auto-builds a valid start from the account itself — trainee, deck, parents, succession, scenario — and if a saved parent no longer exists it picks a working replacement and keeps going instead of stalling.
 - **It runs your whole roster in parallel.** While one account's career is cooking on the game's servers, Sundial is banking another's and starting a third. Twelve accounts don't take twelve times as long — they overlap. Careers come first, too: an account with a career to bank or start is served before accounts that only owe dailies, because an uncollected career leaves that account idle while dailies keep until the reset.
@@ -72,19 +72,21 @@ The training loop is the star — but a real account needs its dailies done and 
 
 | | |
 |---|---|
-| 🎴 **Up to 12 accounts, fully isolated** | Each account is its own world — deck, parents, scenario, skills, races, dailies. No cross-contamination, ever. |
-| 🏆 **Every daily, once each** | Team Trials, Daily Races, your pick of Legend Race, present box, missions, and the shop — all reset-aware, done once per game day. Pick each account's Daily Race — Moonlight Sho for Monies, Jupiter Cup for Support Points — and the difficulty to run it at. |
-| 🍨 **Parfaits, if you want them** | Optional per account: spend a Pleasing Parfait before each Team Trials battle, Daily Race and Legend Race so runners go in with Great mood. Stock-aware, shows your balance, and never spends one on a mood that's already Great. Off by default. |
-| 🗓️ **A week you draw yourself** | Give each day its own run windows — evenings on weekdays, all day at the weekend, as many per day as you like — and keep the whole week under a name to put back later. Sundial starts and stops the loop on the window edges and stays quiet outside them. |
-| ⏰ **Visits only when there's a reason** | No mindless polling. Sundial signs in when a career finishes, RP fills, or the reset passes — and sits silent otherwise. ~12× fewer logins than a naive loop. |
-| 🧠 **One-click running-style presets** | Front Runner, Pace Chaser, Late Surger, End Closer — each fills your skills-to-buy list and schedules every G1 mile/medium/long automatically. Import and export them. |
-| 🥇 **Run every G1 it's suited for** | Optional per account: extend the auto-scheduled G1s across all three years instead of just the first two. A legacy parent is judged on its G1 wins, so for parent farming this is the shape you want. Aptitude-gated, never clashes with a compulsory race. |
-| 🧯 **Clears its own blockers** | A career left half-played in the game blocks Independent Training entirely — Sundial names it and, if you opt in per account, discards it and starts fresh. Off by default: it deletes a real career and can't be undone. |
-| 👤 **Acts human** | Per-account timing personalities, jitter on every action, and the randomized 2–5 minute banking hold — always on, no off switch. |
-| 🧹 **Veterans manager** | View and safely delete trained umas to free storage, so a full box never stalls training — listed newest-first so fan-race extras sit at the top, with Score and Name a click away. Protected umas are greyed out and never touched. |
-| 📊 **Live local dashboard** | Fleet status, per-account careers and fans, filterable statistics, and a full visit history — all at `127.0.0.1:8780`. **Ctrl-K** jumps straight to any account, setting or page. |
-| 🔔 **Discord digests** | One clean webhook per cycle: total fans, fans per account, dailies claimed, legend/daily status. A glance, not a firehose. |
-| 🔄 **Safe self-update** | Cryptographically-signed updates — Sundial only ever installs a build signed by the real publisher's key. |
+| **Up to 12 accounts, fully isolated** | Each account is its own world — deck, parents, scenario, skills, races, dailies. No cross-contamination, ever. |
+| **Every daily, once each** | Team Trials, Daily Races, your pick of Legend Race, present box, missions, and the shop — all reset-aware, done once per game day. Pick each account's Daily Race — Moonlight Sho for Monies, Jupiter Cup for Support Points — and the difficulty to run it at. |
+| **Parfaits, if you want them** | Optional per account: spend a Pleasing Parfait before each Team Trials battle, Daily Race and Legend Race so runners go in with Great mood. Stock-aware, shows your balance, and never spends one on a mood that's already Great. Off by default. |
+| **A week you draw yourself** | Give each day its own run windows — evenings on weekdays, all day at the weekend, as many per day as you like — and keep the whole week under a name to put back later. Sundial starts and stops the loop on the window edges and stays quiet outside them. |
+| **Visits only when there's a reason** | No mindless polling. Sundial signs in when a career finishes, RP fills, or the reset passes — and sits silent otherwise. ~12× fewer logins than a naive loop. |
+| **Filter the skill list** | Narrow the picker by surface, distance and running style, then **Add shown** or **Ban shown** in one go — so setting up a sprinter does not mean scrolling 620 skills. |
+| **One-click running-style presets** | Front Runner, Pace Chaser, Late Surger, End Closer — each fills your skills-to-buy list and schedules every G1 mile/medium/long automatically. Import and export them. |
+| **Run every G1 it's suited for** | Optional per account: extend the auto-scheduled G1s across all three years instead of just the first two. A legacy parent is judged on its G1 wins, so for parent farming this is the shape you want. Aptitude-gated, never clashes with a compulsory race. |
+| **Clears its own blockers** | A career left half-played in the game blocks Independent Training entirely — Sundial names it and, if you opt in per account, discards it and starts fresh. Off by default: it deletes a real career and can't be undone. |
+| **Acts human** | Per-account timing personalities, jitter on every action, and the randomized 2–5 minute banking hold — always on, no off switch. |
+| **Veterans manager** | View and safely delete trained umas to free storage, so a full box never stalls training — listed newest-first so fan-race extras sit at the top, with Score and Name a click away. Protected umas are greyed out and never touched. |
+| **Live local dashboard** | Fleet status, per-account careers and fans, filterable statistics, and a full visit history — all at `127.0.0.1:8780`. **Ctrl-K** jumps straight to any account, setting or page. |
+| **Webhooks, plural** | Send cycle digests to as many endpoints as you like — a Discord channel and a log collector at once. The format is detected from the URL, you choose which sections a post carries, and delivery retries a server error but not a wrong address. |
+| **Career posts you'd actually open** | A banked career arrives with the trainee's portrait, a picture of the deck you ran, the **sparks it produced grouped by type**, the skills it learned and the ones the game refused, plus stats, grade, races and fans. |
+| **Safe self-update** | Cryptographically-signed updates — Sundial only ever installs a build signed by the real publisher's key. |
 
 ---
 
@@ -158,4 +160,3 @@ Since 1.0.16 Sundial unpacks itself **once**, into `%LOCALAPPDATA%\Icarus Networ
 Sundial is an independent, unofficial tool. It is **not affiliated with, endorsed by, or sponsored by Cygames, Inc.** "Umamusume: Pretty Derby" and all related names and marks are the property of their respective owners.
 
 Sundial is **proprietary software** — see [LICENSE](LICENSE). You may download and run the official build for personal use; you may **not** copy, modify, redistribute, or reuse it or its code. All rights reserved © 2026 Remezzo / Icarus Network.
-
